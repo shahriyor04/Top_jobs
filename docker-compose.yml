@@ -1,0 +1,58 @@
+#version: '3'
+#
+#services:
+#  django:
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+##    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic  && python manage.py runserver 0.0.0.0:8000"
+#    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn root.wsgi:application --bind 0.0.0.0:8000"
+#    ports:
+#      - "8000:8000"
+#    volumes:
+#      - .:/app
+#      - static_volume:/app/static
+#      - media_volume:/app/media
+#    depends_on:
+#      - redis
+#      - db
+#      - celery
+#    restart: always
+#
+#  redis:
+#    image: redis:6-alpine
+#    container_name: redis_container
+#    restart: always
+#    volumes:
+#      - redis:/data
+#    expose:
+#      - 6379
+#
+#  db:
+#    image: postgres:15-alpine
+#    container_name: postgres_container
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgres/data
+#    environment:
+#      - POSTGRES_PASSWORD=1
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_DB=postgres
+#    restart: always
+#
+#  celery:
+#    build:
+#      context: ./celery_service
+#      dockerfile: Dockerfile
+#    command: celery -A root.celery_app worker --loglevel=info
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      - redis
+#volumes:
+#  postgres_data:
+#  static_volume:
+#  media_volume:
+#  redis:
+#    driver: local
